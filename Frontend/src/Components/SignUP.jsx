@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import img_signup from '../assets/Sign-up.png';
 
 const SignUp = () => {
@@ -121,9 +122,12 @@ const SignUp = () => {
                 />
                 <label htmlFor="terms" className="ml-3 block text-base text-gray-700">
                   I accept the{' '}
-                  <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500 transition-colors duration-200">
+                  <Link
+                    to="/terms"
+                    className="font-semibold text-indigo-600 hover:text-indigo-500 transition-colors duration-200"
+                  >
                     Terms and Conditions
-                  </a>
+                  </Link>
                 </label>
               </div>
 
@@ -141,9 +145,12 @@ const SignUp = () => {
               <div className="text-center">
                 <p className="text-base text-gray-600">
                   Already have an account?{' '}
-                  <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500 transition-colors duration-200">
+                  <Link
+                    to="/signin"
+                    className="font-semibold text-indigo-600 hover:text-indigo-500 transition-colors duration-200"
+                  >
                     Login here
-                  </a>
+                  </Link>
                 </p>
               </div>
             </form>
