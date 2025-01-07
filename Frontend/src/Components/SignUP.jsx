@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import img_signup from '../assets/Sign-up.png';
+import Modal from 'react-modal';
+
+// Ensure Modal is properly attached to the app root
+Modal.setAppElement('#root');
 
 const SignUp = () => {
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
+
   return (
-    <div className="min-h-[90vh] from-indigo-50 to-white py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto flex rounded-2xl shadow-2xl overflow-hidden bg-white">
+    <div className="min-h-[70vh] from-indigo-50 to-white py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto flex rounded-2xl shadow-2xl overflow-hidden bg-white ">
         {/* Left Section - Form */}
         <div className="flex-1 flex items-center justify-center p-8 lg:p-12">
           <div className="w-full max-w-2xl space-y-8">
@@ -122,14 +131,34 @@ const SignUp = () => {
                 />
                 <label htmlFor="terms" className="ml-3 block text-base text-gray-700">
                   I accept the{' '}
-                  <Link
-                    to="/terms"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500 transition-colors duration-200"
+                  <span
+                    onClick={openModal}
+                    className="font-semibold text-indigo-600 hover:text-indigo-500 transition-colors duration-200 cursor-pointer"
                   >
                     Terms and Conditions
-                  </Link>
+                  </span>
                 </label>
               </div>
+
+              {/* Modal for Terms and Conditions */}
+              <Modal
+                isOpen={isModalOpen}
+                onRequestClose={closeModal}
+                contentLabel="Terms and Conditions"
+                className="bg-white rounded-lg shadow-xl max-w-lg mx-auto p-6 focus:outline-none"
+                overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+              >
+                <h2 className="text-2xl font-bold mb-4">Terms and Conditions</h2>
+                <p className="text-gray-600">
+                  By using this application, you agree to the following terms and conditions: [Insert detailed terms here...].
+                </p>
+                <button
+                  onClick={closeModal}
+                  className="mt-4 py-2 px-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+                >
+                  Close
+                </button>
+              </Modal>
 
               {/* Sign Up Button */}
               <div>
@@ -161,9 +190,9 @@ const SignUp = () => {
         <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-indigo-50 to-white items-center justify-center p-12">
           <div className="relative w-full">
             <div className="absolute inset-0 bg-indigo-100 rounded-full filter blur-3xl opacity-30 animate-pulse"></div>
-            <img 
-              src={img_signup} 
-              alt="Sign up illustration" 
+            <img
+              src={img_signup}
+              alt="Sign up illustration"
               className="relative w-full h-auto max-h-[800px] object-contain animate-float"
             />
           </div>
