@@ -1,32 +1,29 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
-import path from 'path';
 import logo from '../assets/logo.png';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-  
+
   const navigation = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
-    {name: 'SignIn' ,path: '/signin'},
-    {name:'SignUP' , path: '/signup' }
+    { name: 'Sign In', path: '/signin' },
+    { name: 'Sign Up', path: '/signup' },
   ];
 
-  const isActivePath = (path) => {
-    return location.pathname === path;
-  };
+  const isActivePath = (path) => location.pathname === path;
 
   return (
-    <nav className="bg-white shadow-lg">
+    <nav className="bg-black font-bold">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           {/* Logo/Brand */}
           <div className="flex items-center">
             <Link to="/" className="flex-shrink-0">
-              <img src={logo} className='w-20' />
+              <img src={logo} alt="Logo" className="w-20" />
             </Link>
           </div>
 
@@ -38,8 +35,8 @@ const Navbar = () => {
                 to={item.path}
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
                   isActivePath(item.path)
-                    ? 'bg-gray-900 text-white'
-                    : 'text-gray-700 hover:bg-gray-100'
+                    ? 'bg-white text-black'
+                    : 'text-white hover:bg-white hover:text-black'
                 }`}
               >
                 {item.name}
@@ -51,7 +48,8 @@ const Navbar = () => {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+              aria-label="Toggle navigation menu"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -67,10 +65,10 @@ const Navbar = () => {
               <Link
                 key={item.name}
                 to={item.path}
-                className={`block px-3 py-2 rounded-md text-base font-medium ${
+                className={`block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
                   isActivePath(item.path)
-                    ? 'bg-gray-900 text-white'
-                    : 'text-gray-700 hover:bg-gray-100'
+                    ? 'bg-white text-black'
+                    : 'text-white hover:bg-white hover:text-black'
                 }`}
                 onClick={() => setIsOpen(false)}
               >
