@@ -3,7 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Check } from 'lucide-react';
 import img_signup from '../assets/Sign-up.png';
 import Modal from 'react-modal';
-import axios from 'axios'
+import axios from 'axios';
+import gsap from 'gsap';
+
 
 // Ensure Modal is properly attached to the app root
 Modal.setAppElement('#root');
@@ -11,6 +13,7 @@ Modal.setAppElement('#root');
 const SignUp = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [isSuccessModalOpen, setSuccessModalOpen] = useState(false);
+  const [isOTPModalOpen, setOTPModalOpen] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -18,42 +21,104 @@ const SignUp = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const [otp, setOTP] = useState('');
+
+  const navigate = useNavigate();
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
   const openSuccessModal = () => setSuccessModalOpen(true);
   const closeSuccessModal = () => {
     setSuccessModalOpen(false);
-    navigate("/");
+    navigate("/signin");
+  };
+  const openOTPModal = () => setOTPModalOpen(true);
+  const closeOTPModal = () => setOTPModalOpen(false);
+
+  // Handle OTP sending
+  const handleSendOTP = async () => {
+    if (!email) {
+      setMessage('Please enter an email address first');
+      return;
+    }
+    try {
+      // Replace with your actual OTP sending API endpoint
+      const response = await axios.post(import.meta.env.VITE_SEND_OTP_API, { email });
+      if (response) {
+        openOTPModal();
+        setMessage('OTP sent successfully!');
+      }
+    } catch (error) {
+      setMessage(error.response?.data?.message || 'Failed to send OTP');
+    }
   };
 
-  let navigate = useNavigate();
+  // Handle OTP verification
+  const handleVerifyOTP = async () => {
+    try {
+      // Replace with your actual OTP verification API endpoint
+      const response = await axios.post(import.meta.env.VITE_VERIFY_OTP_API, { email, otp });
+      if (response) {
+        closeOTPModal();
+        setMessage('Email verified successfully!');
+      }
+    } catch (error) {
+      setMessage(error.response?.data?.message || 'Invalid OTP');
+    }
+  };
+
+  // OTP Modal Component
+  const OTPVerificationModal = () => (
+    <Modal
+      isOpen={isOTPModalOpen}
+      onRequestClose={closeOTPModal}
+      contentLabel="OTP Verification"
+      className="bg-white rounded-lg shadow-xl max-w-md mx-auto p-6 focus:outline-none"
+      overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+    >
+      <div className="text-center">
+        <h2 className="text-2xl font-bold mb-4">Enter OTP</h2>
+        <input
+          type="text"
+          value={otp}
+          onChange={(e) => setOTP(e.target.value)}
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg mb-4"
+          placeholder="Enter OTP"
+        />
+        <button
+          onClick={handleVerifyOTP}
+          className="w-full py-3 px-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+        >
+          Verify OTP
+        </button>
+      </div>
+    </Modal>
+  );
 
   // Handle Submit Event
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     const newUser = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      contact: contact,
-      password: password,
-      username: username,
-    }
+      firstName,
+      lastName,
+      email,
+      contact,
+      password,
+      username,
+    };
 
     try {
-      // Send Data to the server
       const response = await axios.post(import.meta.env.VITE_REGISTER_USER_API, newUser);
       if(response) {
         setMessage(response.data.message);
-        openSuccessModal(); // Open success modal instead of immediate navigation
+        openSuccessModal();
       }
     } catch(error) {
-      setMessage(error.response.data.message);
+      setMessage(error.response?.data?.message || 'Registration failed');
     }
-  }
-
+  };
+  
   return (
     <div className="min-h-[70vh] from-indigo-50 to-white py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto flex rounded-2xl shadow-2xl overflow-hidden bg-white">
@@ -72,8 +137,9 @@ const SignUp = () => {
 
             {/* Form */}
             <form 
-            className="mt-10 space-y-8"
-            onSubmit={handleSubmit}>
+              className="mt-10 space-y-8"
+              onSubmit={handleSubmit}
+            >
               {/* Name Fields */}
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                 <div className="relative">
@@ -114,16 +180,25 @@ const SignUp = () => {
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                     Email Address
                   </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-base"
-                    placeholder="example@example.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
+                  <div className="flex gap-2">
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-base"
+                      placeholder="example@example.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <button
+                      type="button"
+                      onClick={handleSendOTP}
+                      className="mt-1 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors duration-200"
+                    >
+                      Send OTP
+                    </button>
+                  </div>
                 </div>
                 <div className="relative">
                   <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
@@ -136,6 +211,7 @@ const SignUp = () => {
                     required
                     className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-base"
                     placeholder="Contact Number"
+                    value={contact}
                     onChange={(e) => setContact(e.target.value)}
                   />
                 </div>
@@ -195,51 +271,6 @@ const SignUp = () => {
                 </label>
               </div>
 
-              {/* Modal for Terms and Conditions */}
-              <Modal
-                isOpen={isModalOpen}
-                onRequestClose={closeModal}
-                contentLabel="Terms and Conditions"
-                className="bg-white rounded-lg shadow-xl max-w-lg mx-auto p-6 focus:outline-none"
-                overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
-              >
-                <h2 className="text-2xl font-bold mb-4">Terms and Conditions</h2>
-                <p className="text-gray-600">
-                  By using this application, you agree to the following terms and conditions: [Insert detailed terms here...].
-                </p>
-                <button
-                  onClick={closeModal}
-                  className="mt-4 py-2 px-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
-                >
-                  Close
-                </button>
-              </Modal>
-
-              {/* Success Modal */}
-              <Modal
-                isOpen={isSuccessModalOpen}
-                onRequestClose={closeSuccessModal}
-                contentLabel="Success Message"
-                className="bg-white rounded-lg shadow-xl max-w-md mx-auto p-8 focus:outline-none"
-                overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
-              >
-                <div className="text-center">
-                  <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-4">
-                    <Check className="h-8 w-8 text-green-600" />
-                  </div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4">Account Created Successfully!</h2>
-                  <p className="text-gray-600 mb-6">
-                    Welcome to our platform! You can now login with your credentials.
-                  </p>
-                  <button
-                    onClick={closeSuccessModal}
-                    className="w-full py-3 px-4 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200"
-                  >
-                    Continue to Login
-                  </button>
-                </div>
-              </Modal>
-
               {/* Sign Up Button */}
               <div>
                 <button
@@ -249,7 +280,7 @@ const SignUp = () => {
                   Create Account
                 </button>
               </div>
-              <div className='w-full text-center text-red-500 font-semibold'> {message} </div>
+              <div className='w-full text-center text-red-500 font-semibold'>{message}</div>
 
               {/* Login Link */}
               <div className="text-center">
@@ -278,6 +309,52 @@ const SignUp = () => {
             />
           </div>
         </div>
+
+        {/* Modals */}
+        <Modal
+          isOpen={isModalOpen}
+          onRequestClose={closeModal}
+          contentLabel="Terms and Conditions"
+          className="bg-white rounded-lg shadow-xl max-w-lg mx-auto p-6 focus:outline-none"
+          overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+        >
+          <h2 className="text-2xl font-bold mb-4">Terms and Conditions</h2>
+          <p className="text-gray-600">
+            By using this application, you agree to the following terms and conditions: [Insert detailed terms here...].
+          </p>
+          <button
+            onClick={closeModal}
+            className="mt-4 py-2 px-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+          >
+            Close
+          </button>
+        </Modal>
+
+        <Modal
+          isOpen={isSuccessModalOpen}
+          onRequestClose={closeSuccessModal}
+          contentLabel="Success Message"
+          className="bg-white rounded-lg shadow-xl max-w-md mx-auto p-8 focus:outline-none"
+          overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+        >
+          <div className="text-center">
+            <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-4">
+              <Check className="h-8 w-8 text-green-600" />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Account Created Successfully!</h2>
+            <p className="text-gray-600 mb-6">
+              Welcome to our platform! You can now login with your credentials.
+            </p>
+            <button
+              onClick={closeSuccessModal}
+              className="w-full py-3 px-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors duration-200 cursor-pointer"
+            >
+              Continue to Login
+            </button>
+          </div>
+        </Modal>
+
+        <OTPVerificationModal />
 
         {/* CSS for animations */}
         <style>{`

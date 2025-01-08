@@ -24,6 +24,8 @@ This web application provides a platform for users to create an account, sign in
   - React Router for routing
   - Axios for making HTTP requests
   - React Modal for user interactions
+  -npm install gsap
+
 - **Backend**:
   - Node.js
   - Express.js
@@ -31,6 +33,8 @@ This web application provides a platform for users to create an account, sign in
   - JWT for user authentication
   - CORS for enabling cross-origin requests
   - Cookie-parser for managing cookies
+  --npm install cors
+
 
 ## Installation Instructions
 
