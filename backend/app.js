@@ -21,18 +21,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 require('dotenv').config();
 connectDB(); // Connect to database
 
-
-
-app.get('/image', (req, res) => {
-    
-    
-    imageModel.create({
-        imageUrl: "kaif",
-        public_Id: "Sasdoihi",
-        userId: "677dbcb59f48b8e6ac4764db"
-    })
-
-    res.status(200);
+app.get('/otp', (req, res) => {
+    try {
+   res.status(200).send({ OTP : generateOTP()})
+    } catch(err){
+        res.status(500).send({error : error.message})
+    }
 })
 
 // Routes

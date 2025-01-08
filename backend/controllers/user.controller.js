@@ -1,7 +1,10 @@
 const userModel = require('../models/user.model')
 const { generateToken } = require('../utils/generateToken')
 const { validationResult } = require('express-validator')
+const { generateOTP } = require('../utils/generateOTP')
+const otpModel = require('../models/OTP.model')
 const { isEmail } = require('validator')
+const { sendMail } = require('../controllers/email.controller')
 
 
 // Register User
@@ -79,4 +82,45 @@ module.exports.userLogin = async (req, res) => {
     } catch(error) {
         res.status(500).json({ Error: error.message });
     }
+}
+
+module.exports.sendOTP = async (req, res) => {
+           
+    let error = validationResult(req);
+    if(!error.isEmpty())  return res.status(500).json({ Error: error.message });
+
+    try {
+
+    let {username, email } = req.body
+    const otp = generateOTP()
+    const newOTP = await otpModel.create({
+        otp,
+        username,
+        email,
+    })
+    
+    const mail = sendMail(email, username, otp)
+    res.status(200).json({ message: mail, newOTP})
+
+    } catch(error) {
+      res.status(500).json({ Error: error})
+    }
+}
+
+module.exports.otp = async(req, res) => {
+    
+     let { otp } = req.body
+
+     try{
+
+        const isOTPMatch = await otpModel.findOne({ otp } )
+        if(!isOTPMatch){
+            res.status(404).json({ Error: "Resend otp agian!!"})
+        } else {
+
+           
+        }
+     } catch(error) {
+        
+     }
 }

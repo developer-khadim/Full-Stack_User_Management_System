@@ -33,4 +33,15 @@ router.post('/login',
       userController.userLogin
    )
 
+router.post('/send-mail', 
+         [
+            body('username')
+                .isString()
+                .notEmpty(),
+            body('email')
+                .isEmail()
+                .withMessage('Please enter your email address')
+         ],
+         userController.sendOTP
+)
 module.exports = router
