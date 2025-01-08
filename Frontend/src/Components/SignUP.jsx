@@ -1,17 +1,52 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import img_signup from '../assets/Sign-up.png';
 import Modal from 'react-modal';
+import axios from 'axios'
+
 
 // Ensure Modal is properly attached to the app root
 Modal.setAppElement('#root');
 
 const SignUp = () => {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [firstName , setFirstName] = useState('')
+  const [lastName , setLastName] = useState('')
+  const [email , setEmail] = useState('')
+  const [contact , setContact] = useState('')
+  const [username , setUsername] = useState('')
+  const [password , setPassword] = useState('')
+  const [message , setMessage] = useState('')
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
+  let navigate = useNavigate();
 
+//  Handle Submit Event
+  const handleSubmit = async (e) => {
+      e.preventDefault();
+      
+      const newUser = {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        contact: contact,
+        password: password,
+        username: username,
+       }
+    
+
+     try {
+      // Send Data to the server
+      const response = await axios.post(import.meta.env.VITE_REGISTER_USER_API, newUser);
+      if(response){
+        setMessage(response.data.message) 
+        navigate("/");
+      }
+     } catch(error){
+      setMessage(error.response.data.message)
+     }
+}   
   return (
     <div className="min-h-[70vh] from-indigo-50 to-white py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto flex rounded-2xl shadow-2xl overflow-hidden bg-white ">
@@ -29,7 +64,9 @@ const SignUp = () => {
             </div>
 
             {/* Form */}
-            <form className="mt-10 space-y-8">
+            <form 
+            className="mt-10 space-y-8"
+            onSubmit={handleSubmit}>
               {/* Name Fields */}
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                 <div className="relative">
@@ -42,7 +79,9 @@ const SignUp = () => {
                     name="firstName"
                     required
                     className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-base"
-                    placeholder="Khadim"
+                    placeholder="First Name"
+                    value = {firstName}
+                    onChange={ (e) =>  setFirstName(e.target.value)}
                   />
                 </div>
                 <div className="relative">
@@ -55,7 +94,9 @@ const SignUp = () => {
                     name="lastName"
                     required
                     className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-base"
-                    placeholder="Ali"
+                    placeholder="Last Name"
+                    value={lastName}
+                    onChange={ (e) =>  setLastName(e.target.value)}
                   />
                 </div>
               </div>
@@ -73,6 +114,8 @@ const SignUp = () => {
                     required
                     className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-base"
                     placeholder="example@example.com"
+                    value={email}
+                    onChange={ (e) =>  setEmail(e.target.value)}
                   />
                 </div>
                 <div className="relative">
@@ -85,7 +128,8 @@ const SignUp = () => {
                     name="phone"
                     required
                     className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-base"
-                    placeholder="+92 349-0390000"
+                    placeholder="Contact Number"
+                    onChange={ (e) =>  setContact(e.target.value)}
                   />
                 </div>
               </div>
@@ -102,7 +146,9 @@ const SignUp = () => {
                     name="username"
                     required
                     className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-base"
-                    placeholder="Khadim-Ali"
+                    placeholder="Username"
+                    value={username}
+                    onChange={ (e) =>  setUsername(e.target.value)}
                   />
                 </div>
                 <div className="relative">
@@ -115,7 +161,9 @@ const SignUp = () => {
                     name="password"
                     required
                     className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-base"
-                    placeholder="••••••••"
+                    placeholder="Password"
+                    value={password}
+                    onChange={ (e) =>  setPassword(e.target.value)}
                   />
                 </div>
               </div>
@@ -169,6 +217,7 @@ const SignUp = () => {
                   Create Account
                 </button>
               </div>
+             <div className='w-full text-center text-red-500 font-semibold'> {message} </div>
 
               {/* Login Link */}
               <div className="text-center">

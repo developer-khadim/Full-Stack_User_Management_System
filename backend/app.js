@@ -6,18 +6,23 @@ const path = require('path');
 const app = express();
 const userRouter = require('./routes/user.router')
 const imageModel = require('./models/image.model')
+const { connectDB } = require('./config/dbConnection');
 
 // Cors configuration
 app.use(cors({
-    origin: process.env.CORS_ORIGIN,
+    origin: "http://localhost:5173",
+    methods: "GET, POST, PATCH, DELETE",
     credentials: true
 }))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')));
+require('dotenv').config();
+connectDB(); // Connect to database
 
-// for test
+
+
 app.get('/image', (req, res) => {
     
     
@@ -29,6 +34,11 @@ app.get('/image', (req, res) => {
 
     res.status(200);
 })
+
+app.get('/front', (req, res) => {
+    res.status(200).send({message: "I am sending you data Khaidim"})
+})
+
 // Routes
 app.use('/user', userRouter)
 

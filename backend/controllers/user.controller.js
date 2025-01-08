@@ -37,7 +37,8 @@ module.exports.registerUser = async (req, res) => {
            res
            .status(201)
            .cookie('token', token, { httpOnly: true, secure: true })
-           .json({ user: {...createdUser.toObject(), password: undefined}, token})
+           .json({ user: {...createdUser.toObject(), password: undefined}, token, message: "User created successfully"})
+        //    .send({ message: "User created successfully"})
         }
 
     } catch(error) {

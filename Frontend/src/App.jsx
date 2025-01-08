@@ -1,13 +1,17 @@
 // App.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './Components/Navbar';
 import Home from './Pages/Home';
 import About from './Components/About';
 import SignIn from './Components/SignIn';
 import SignUP from './Components/SignUP';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 function App() {
+  
+  
   return (
     <Router>
       <div className="min-h-screen bg-gray-50">

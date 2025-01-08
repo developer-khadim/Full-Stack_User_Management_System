@@ -1,14 +1,13 @@
 //******** Database Connecdtion Configuration  *******/
 const mongoose = require('mongoose');
 
-module.exports.connectDB = async () => {
-
-   try{
-    const connectionInstance = await  mongoose.connect(process.env.dbConnection)
-    console.log(`\nMongoDB connected!! DB host: ${connectionInstance.connection.host}`)
-
-   } catch(error){
-     console.log("MongoDB connection failed: " + error);
-
-   }
-  }
+module.exports.connectDB = () => {
+    //  Connect to the database
+     mongoose.connect(process.env.dbConnection)
+    .then(() => {
+      console.log(`MongoDB connected!! DB host: ${mongoose.connection.host}`);
+    }).catch((error) => {
+       console.log("MONGODB connection FAILED: " , error)
+    })
+    
+ }
