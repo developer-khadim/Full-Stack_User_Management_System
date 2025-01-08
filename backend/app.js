@@ -36,7 +36,7 @@ app.get('/image', (req, res) => {
 })
 
 app.get('/front', (req, res) => {
-    res.status(200).send({message: "I am sending you data Khaidim"})
+    res.status(200).send({message: "I am sending you data Khadim"})
 })
 
 // Routes
