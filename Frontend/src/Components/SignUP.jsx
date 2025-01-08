@@ -11,6 +11,7 @@ import gsap from 'gsap';
 Modal.setAppElement('#root');
 
 const SignUp = () => {
+  
   const [isModalOpen, setModalOpen] = useState(false);
   const [isSuccessModalOpen, setSuccessModalOpen] = useState(false);
   const [isOTPModalOpen, setOTPModalOpen] = useState(false);

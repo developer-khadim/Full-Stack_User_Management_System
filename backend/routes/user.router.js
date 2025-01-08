@@ -36,12 +36,13 @@ router.post('/login',
 router.post('/send-mail', 
          [
             body('username')
-                .isString()
-                .notEmpty(),
+                .isString(),
             body('email')
                 .isEmail()
                 .withMessage('Please enter your email address')
          ],
          userController.sendOTP
-)
+);
+
+router.post('/otp', userController.otp)
 module.exports = router
