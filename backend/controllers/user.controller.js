@@ -1,6 +1,7 @@
 const userModel = require('../models/user.model')
 const { generateToken } = require('../utils/generateToken')
 const { validationResult } = require('express-validator')
+const { isEmail } = require('validator')
 
 
 // Register User
@@ -47,6 +48,35 @@ module.exports.registerUser = async (req, res) => {
             return res.status(409).send({ message: "The username already exists" });
         }
         res.status(500).json({ Error: error.message});
-        console.error(error);
+    }
+}
+
+module.exports.userLogin = async (req, res) => {
+    
+    let error = validationResult(req);
+    if(!error.isEmpty()) {
+        res.status(error.status).json({ Error: error.message });
+    } 
+    try {
+        // Destructure the body
+        let { username_email, password } = req.body;
+
+        // Check isEmail
+        const isInputEmail = isEmail(username_email);
+        let existedUser = await userModel.findOne(
+            isInputEmail ? 
+                  { email: username_email } : { username: username_email }
+        )
+        
+        if(!existedUser || !(await existedUser.comparePassword(password))){
+           res.status(409).json({ Error: "User not found!" });
+
+        } else {
+            // Generate Token
+            let token =  generateToken(existedUser);
+            res.status(200).cookie('token', token, { httpOnly: true, secure: true }).json({...existedUser.toObject(), password: undefined},{ message: "User logined Successfully"}, token)
+        }
+    } catch(error) {
+        res.status(500).json({ Error: error.message });
     }
 }

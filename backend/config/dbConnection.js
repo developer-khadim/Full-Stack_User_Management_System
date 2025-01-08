@@ -9,5 +9,4 @@ module.exports.connectDB = () => {
     }).catch((error) => {
        console.log("MONGODB connection FAILED: " , error)
     })
-    
  }

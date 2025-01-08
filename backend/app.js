@@ -34,9 +34,10 @@ app.get('/image', (req, res) => {
 
     res.status(200);
 })
-
-app.get('/front', (req, res) => {
-    res.status(200).send({message: "I am sending you data Khaidim"})
+const { sendMail } = require('./controllers/email.controller')
+app.get('/email', (req, res) => {
+      let info = sendMail("khadim.work.ai@gmail.com", "Khadim Ali", 123456)
+      res.send(info)
 })
 
 // Routes
