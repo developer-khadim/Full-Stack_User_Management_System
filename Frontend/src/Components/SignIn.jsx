@@ -1,9 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import img_signin from '../assets/login.png';
 import axios from 'axios';
 
 const SignIn = () => {
+
+   const [username_email, setUsername_Email] = useState('')
+   const [password, setPassword] = useState('')
+   const [message, setMessage] = useState('')
+
+   const onSubmitHandler = async (e) => {
+        e.preventDefault();
+
+        try{ 
+         const response = await axios.post(import.meta.env.VITE_LOGIN_USER_API, {username_email, password})
+
+         if(response.status === 200 ){
+            setMessage(response.data.message)
+         }
+        } catch(error){
+          if (error.response.data) {
+            setMessage(error.response.data.Error); 
+        } else {
+            setMessage("An unexpected error occurred."); 
+        }
+        }
+   }
+
   return (
     <div className="min-h-[90vh] from-indigo-50 to-white flex items-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto flex rounded-2xl shadow-2xl overflow-hidden bg-white">
@@ -33,7 +56,9 @@ const SignIn = () => {
             </div>
 
             {/* Form */}
-            <form className="mt-10 space-y-8">
+            <form 
+            onSubmit={onSubmitHandler}
+            className="mt-10 space-y-8">
               {/* Email/Username */}
               <div className="space-y-6">
                 <div className="relative">
@@ -47,6 +72,8 @@ const SignIn = () => {
                     required
                     className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-base"
                     placeholder="example@example.com"
+                    value={username_email}
+                    onChange={ (e) => setUsername_Email(e.target.value)}
                   />
                 </div>
               </div>
@@ -63,7 +90,9 @@ const SignIn = () => {
                     name="password"
                     required
                     className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-base"
-                    placeholder="••••••••"
+                    placeholder="Password"
+                    value={password}
+                    onChange={ (e) => setPassword(e.target.value)}
                   />
                 </div>
               </div>
@@ -107,7 +136,8 @@ const SignIn = () => {
                     to="/signup"
                     className="font-semibold text-indigo-600 hover:text-indigo-500 transition-colors duration-200"
                   >
-                    Create one here
+                    Create one here <br />
+                    {message}
                   </Link>
                 </p>
               </div>

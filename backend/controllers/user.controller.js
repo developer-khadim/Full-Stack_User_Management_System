@@ -42,7 +42,6 @@ module.exports.registerUser = async (req, res) => {
            .status(201)
            .cookie('token', token, { httpOnly: true, secure: true })
            .json({ user: {...createdUser.toObject(), password: undefined}, token, message: "User created successfully"})
-        //    .send({ message: "User created successfully"})
         }
 
     } catch(error) {
@@ -77,8 +76,12 @@ module.exports.userLogin = async (req, res) => {
         } else {
             // Generate Token
             let token =  generateToken(existedUser);
-            res.status(200).cookie('token', token, { httpOnly: true, secure: true }).json({...existedUser.toObject(), password: undefined},{ message: "User logined Successfully"}, token)
-        }
+            res.status(200)
+            .cookie('token', token, { httpOnly: true, secure: true })
+            .json({message: "User logined Successfully", user: { ...existedUser.toObject(), password: undefined }, 
+            token
+             })
+    }
     } catch(error) {
         res.status(500).json({ Error: error.message });
     }
@@ -91,7 +94,7 @@ module.exports.sendOTP = async (req, res) => {
 
     try {
 
-    let {username, email } = req.body
+    let { username, email } = req.body
     const otp = generateOTP()
     const newOTP = await otpModel.create({
         otp,
@@ -103,7 +106,7 @@ module.exports.sendOTP = async (req, res) => {
     res.status(200).json({ message: mail, newOTP})
 
     } catch(error) {
-      res.status(500).json({ Error: error})
+      res.status(500).json({ Error: error.message})
     }
 }
 
@@ -118,9 +121,12 @@ module.exports.otp = async(req, res) => {
             res.status(404).json({ Error: "Resend otp agian!!"})
         } else {
 
-           
+            isOTPMatch.isVerified= true;
+            await isOTPMatch.save();
+
+            return res.status(200).json({ message: "OTP is verified successfully!" })
         }
      } catch(error) {
-        
+        return res.status(500).json({ error: "An error occurred. Please try again!" });
      }
 }
