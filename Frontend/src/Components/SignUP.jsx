@@ -1,55 +1,62 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Check } from 'lucide-react';
 import img_signup from '../assets/Sign-up.png';
 import Modal from 'react-modal';
 import axios from 'axios'
-
 
 // Ensure Modal is properly attached to the app root
 Modal.setAppElement('#root');
 
 const SignUp = () => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const [firstName , setFirstName] = useState('')
-  const [lastName , setLastName] = useState('')
-  const [email , setEmail] = useState('')
-  const [contact , setContact] = useState('')
-  const [username , setUsername] = useState('')
-  const [password , setPassword] = useState('')
-  const [message , setMessage] = useState('')
+  const [isSuccessModalOpen, setSuccessModalOpen] = useState(false);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [contact, setContact] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
+  const openSuccessModal = () => setSuccessModalOpen(true);
+  const closeSuccessModal = () => {
+    setSuccessModalOpen(false);
+    navigate("/");
+  };
+
   let navigate = useNavigate();
 
-//  Handle Submit Event
+  // Handle Submit Event
   const handleSubmit = async (e) => {
-      e.preventDefault();
-      
-      const newUser = {
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        contact: contact,
-        password: password,
-        username: username,
-       }
+    e.preventDefault();
     
+    const newUser = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      contact: contact,
+      password: password,
+      username: username,
+    }
 
-     try {
+    try {
       // Send Data to the server
       const response = await axios.post(import.meta.env.VITE_REGISTER_USER_API, newUser);
-      if(response){
-        setMessage(response.data.message) 
-        navigate("/");
+      if(response) {
+        setMessage(response.data.message);
+        openSuccessModal(); // Open success modal instead of immediate navigation
       }
-     } catch(error){
-      setMessage(error.response.data.message)
-     }
-}   
+    } catch(error) {
+      setMessage(error.response.data.message);
+    }
+  }
+
   return (
     <div className="min-h-[70vh] from-indigo-50 to-white py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto flex rounded-2xl shadow-2xl overflow-hidden bg-white ">
+      <div className="max-w-7xl mx-auto flex rounded-2xl shadow-2xl overflow-hidden bg-white">
         {/* Left Section - Form */}
         <div className="flex-1 flex items-center justify-center p-8 lg:p-12">
           <div className="w-full max-w-2xl space-y-8">
@@ -80,8 +87,8 @@ const SignUp = () => {
                     required
                     className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-base"
                     placeholder="First Name"
-                    value = {firstName}
-                    onChange={ (e) =>  setFirstName(e.target.value)}
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
                   />
                 </div>
                 <div className="relative">
@@ -96,7 +103,7 @@ const SignUp = () => {
                     className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-base"
                     placeholder="Last Name"
                     value={lastName}
-                    onChange={ (e) =>  setLastName(e.target.value)}
+                    onChange={(e) => setLastName(e.target.value)}
                   />
                 </div>
               </div>
@@ -115,7 +122,7 @@ const SignUp = () => {
                     className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-base"
                     placeholder="example@example.com"
                     value={email}
-                    onChange={ (e) =>  setEmail(e.target.value)}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
                 <div className="relative">
@@ -129,7 +136,7 @@ const SignUp = () => {
                     required
                     className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-base"
                     placeholder="Contact Number"
-                    onChange={ (e) =>  setContact(e.target.value)}
+                    onChange={(e) => setContact(e.target.value)}
                   />
                 </div>
               </div>
@@ -148,7 +155,7 @@ const SignUp = () => {
                     className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-base"
                     placeholder="Username"
                     value={username}
-                    onChange={ (e) =>  setUsername(e.target.value)}
+                    onChange={(e) => setUsername(e.target.value)}
                   />
                 </div>
                 <div className="relative">
@@ -163,7 +170,7 @@ const SignUp = () => {
                     className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-base"
                     placeholder="Password"
                     value={password}
-                    onChange={ (e) =>  setPassword(e.target.value)}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
               </div>
@@ -208,6 +215,31 @@ const SignUp = () => {
                 </button>
               </Modal>
 
+              {/* Success Modal */}
+              <Modal
+                isOpen={isSuccessModalOpen}
+                onRequestClose={closeSuccessModal}
+                contentLabel="Success Message"
+                className="bg-white rounded-lg shadow-xl max-w-md mx-auto p-8 focus:outline-none"
+                overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+              >
+                <div className="text-center">
+                  <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-4">
+                    <Check className="h-8 w-8 text-green-600" />
+                  </div>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">Account Created Successfully!</h2>
+                  <p className="text-gray-600 mb-6">
+                    Welcome to our platform! You can now login with your credentials.
+                  </p>
+                  <button
+                    onClick={closeSuccessModal}
+                    className="w-full py-3 px-4 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200"
+                  >
+                    Continue to Login
+                  </button>
+                </div>
+              </Modal>
+
               {/* Sign Up Button */}
               <div>
                 <button
@@ -217,7 +249,7 @@ const SignUp = () => {
                   Create Account
                 </button>
               </div>
-             <div className='w-full text-center text-red-500 font-semibold'> {message} </div>
+              <div className='w-full text-center text-red-500 font-semibold'> {message} </div>
 
               {/* Login Link */}
               <div className="text-center">

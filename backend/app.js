@@ -34,11 +34,6 @@ app.get('/image', (req, res) => {
 
     res.status(200);
 })
-const { sendMail } = require('./controllers/email.controller')
-app.get('/email', (req, res) => {
-      let info = sendMail("khadim.work.ai@gmail.com", "Khadim Ali", 123456)
-      res.send(info)
-})
 
 // Routes
 app.use('/user', userRouter)
