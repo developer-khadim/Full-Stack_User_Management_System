@@ -3,12 +3,17 @@ const bcrypt = require('bcrypt');
 
 
   const adminSchema = new mongoose.Schema({
+        cnic: {
+           type: String,
+           required: true,
+           match: [/^\d{5}-\d{7}-\d{1}$/, 'Please provide a valid CNIC (e.g., 12345-6789012-3)']
+        },
         name: {
-            first: {
+          firstName: {
                 type: String,
                 required: true,
             },
-            last: {
+            lastName: {
                 type: String,
                 required: true,
         } },
@@ -23,29 +28,32 @@ const bcrypt = require('bcrypt');
             required: true,
         },
         contact: [],
-        isAdmin: true,
+        isAdmin: {
+          type: Boolean,
+          default: true,
+        },
         picture: String,
   });
 
 // Password hashing middleware
-adminSchema.pre('save', async (next) => {
+adminSchema.pre('save', async function (next) {
 
      // Skip hashing if the password hasn't been modified
-     if(!this.isModified('password')) return next();
-
-     // Hash the Password
-      bcrypt.genSalt(10)
-      .then(salt => bcrypt.hash(this.password, salt)) // Hash password
-      .then(hash => { 
-        this.password = hash; // Store the hash password
-        return next();
-      })
-      .catch(error => next(error));
+            if(!this.isModified('password')) return next();
+            
+            // Hash the Password
+           await bcrypt.genSalt(10)
+            .then(salt => bcrypt.hash(this.password, salt)) // Hash password
+            .then(hash => {
+                this.password = hash; // Store the hash password
+                next();
+            })
+            .catch(error => next(error));
 })
 
 //Compare password Hook
-adminSchema.methods.comparePassword = (password) => {
-     return bcrypt.compare(password, this.password)
+adminSchema.methods.comparePassword = async function (password){
+     return await bcrypt.compare(password, this.password)
 }
 
 // Export Admin model
