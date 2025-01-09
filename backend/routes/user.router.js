@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const userController = require('../controllers/user.controller')
-const { body, check } = require('express-validator')
+const { body } = require('express-validator')
 
 
+// Register User Route
 router.post('/register', 
     [
         body('username')
@@ -19,7 +20,7 @@ router.post('/register',
      userController.registerUser
 
 )
-
+// User Login Route
 router.post('/login', 
       [
          body('username_email')
@@ -33,6 +34,7 @@ router.post('/login',
       userController.userLogin
    )
 
+   // Send Email Route
 router.post('/send-mail', 
          [
             body('username')
@@ -43,6 +45,17 @@ router.post('/send-mail',
          ],
          userController.sendOTP
 );
+// Verify OTP Route
+router.post('/verify-otp',
+         [
+            body('email')
+                 .isEmail()
+                 .withMessage('Please enter your email address'),
+            body('otp')
+                  .notEmpty()
+                  .withMessage('Please fill the OTP')
+         ],
+         userController.otp
+)
 
-router.post('/otp', userController.otp)
 module.exports = router

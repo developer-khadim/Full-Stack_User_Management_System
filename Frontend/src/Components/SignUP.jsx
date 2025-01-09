@@ -11,7 +11,7 @@ import gsap from 'gsap';
 Modal.setAppElement('#root');
 
 const SignUp = () => {
-  
+
   const [isModalOpen, setModalOpen] = useState(false);
   const [isSuccessModalOpen, setSuccessModalOpen] = useState(false);
   const [isOTPModalOpen, setOTPModalOpen] = useState(false);
@@ -38,16 +38,16 @@ const SignUp = () => {
 
   // Handle OTP sending
   const handleSendOTP = async () => {
-    if (!email) {
+    if (!email && !username) {
       setMessage('Please enter an email address first');
       return;
     }
     try {
       // Replace with your actual OTP sending API endpoint
-      const response = await axios.post(import.meta.env.VITE_SEND_OTP_API, { email });
-      if (response) {
+      const response = await axios.post(import.meta.env.VITE_SEND_OTP_API, { email, username });
+      if (response.status === 200) {
         openOTPModal();
-        setMessage('OTP sent successfully!');
+        setMessage(response.data.message);
       }
     } catch (error) {
       setMessage(error.response?.data?.message || 'Failed to send OTP');
@@ -59,9 +59,9 @@ const SignUp = () => {
     try {
       // Replace with your actual OTP verification API endpoint
       const response = await axios.post(import.meta.env.VITE_VERIFY_OTP_API, { email, otp });
-      if (response) {
+      if (response.status === 200) {
         closeOTPModal();
-        setMessage('Email verified successfully!');
+        setMessage(response.data.message);
       }
     } catch (error) {
       setMessage(error.response?.data?.message || 'Invalid OTP');
@@ -141,7 +141,48 @@ const SignUp = () => {
               className="mt-10 space-y-8"
               onSubmit={handleSubmit}
             >
-              {/* Name Fields */}
+              <div className="relative">
+                  <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+                    Username
+                  </label>
+                  <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    required
+                    className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-base"
+                    placeholder="Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                </div>
+              {/* Email & Phone */}
+              <div className="space-y-6">
+                <div className="relative">
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                    Email Address
+                  </label>
+                  <div className="flex gap-2">
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-base"
+                      placeholder="example@example.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <button
+                      type="button"
+                      onClick={handleSendOTP}
+                      className="mt-1 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors duration-200"
+                    >
+                      Send OTP
+                    </button>
+                  </div>
+                </div>
+                {/* Name Fields */}
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                 <div className="relative">
                   <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
@@ -174,33 +215,6 @@ const SignUp = () => {
                   />
                 </div>
               </div>
-
-              {/* Email & Phone */}
-              <div className="space-y-6">
-                <div className="relative">
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                    Email Address
-                  </label>
-                  <div className="flex gap-2">
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      required
-                      className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-base"
-                      placeholder="example@example.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <button
-                      type="button"
-                      onClick={handleSendOTP}
-                      className="mt-1 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors duration-200"
-                    >
-                      Send OTP
-                    </button>
-                  </div>
-                </div>
                 <div className="relative">
                   <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
                     Contact Number
@@ -220,21 +234,6 @@ const SignUp = () => {
 
               {/* Username & Password */}
               <div className="space-y-6">
-                <div className="relative">
-                  <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-                    Username
-                  </label>
-                  <input
-                    type="text"
-                    id="username"
-                    name="username"
-                    required
-                    className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-base"
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                  />
-                </div>
                 <div className="relative">
                   <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                     Password
