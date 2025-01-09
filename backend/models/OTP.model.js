@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 
+// OTP Schema
 const otpSchema = new mongoose.Schema({
     otp: {
         type: String,
@@ -22,9 +23,15 @@ const otpSchema = new mongoose.Schema({
     },
     createdAt : {
         type: Date,
-        default: Date.now(),
+        default: Date.now,
     }
 })
-otpSchema.index({ createdAt: 1 }, { expireAfterSeconds: 300 }); // 300 seconds = 5 minutes
+//  The OTP will expire automatically in 15 mins
+otpSchema.index({ createdAt: 1 }, { expireAfterSeconds: 1500 }); 
+
+// Compare Match OTP
+otpSchema.methods.compareOTP = function(inputOTP){
+      return   inputOTP === this.otp
+}
 
 module.exports = mongoose.model('OTP', otpSchema);

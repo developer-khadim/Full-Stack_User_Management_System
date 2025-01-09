@@ -96,29 +96,40 @@ module.exports.sendOTP = async (req, res) => {
 
     let { username, email } = req.body
     const otp = generateOTP()
-    const newOTP = await otpModel.create({
-        otp,
-        username,
-        email,
-    })
+
+    const newOTP = await otpModel.findOneAndUpdate(
+         { email: email }, //filter
+         {  
+            otp,  
+            username,
+            isVerified: false,
+            createdAt: new Date()
+         },
+         {
+            new: true,
+            upsert: true,
+            setDefaultsOnInsert: true
+         }
+    )
     
     const mail = sendMail(email, username, otp)
-    res.status(200).json({ message: mail, newOTP})
+    res.status(200).json({ otp: newOTP, message: "Email sent successfully"})
 
     } catch(error) {
-      res.status(500).json({ Error: error.message})
+      res.status(500).json({ Error: error.message, message: "Email coundn't send Successfully, Try agian"})
     }
 }
 
 module.exports.otp = async(req, res) => {
     
-     let { otp } = req.body
+     let { email, otp } = req.body
 
      try{
-
-        const isOTPMatch = await otpModel.findOne({ otp } )
-        if(!isOTPMatch){
-            res.status(404).json({ Error: "Resend otp agian!!"})
+        // Find OTP with Email
+        const isOTPMatch = await otpModel.findOne({ email } )
+        // Match the OTP
+        if(!isOTPMatch || !isOTPMatch.compareOTP(otp)){
+            res.status(404).json({ Error: "OTP doesn't Matched! Resend otp agian!!"})
         } else {
 
             isOTPMatch.isVerified= true;
