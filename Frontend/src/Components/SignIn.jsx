@@ -1,22 +1,23 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import img_signin from '../assets/login.png';
-import axios from 'axios';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import img_signin from "../assets/login.png";
+import { SocialLogin } from "./SocialLogin";
+import axios from "axios";
 
 const SignIn = () => {
-  const [activeTab, setActiveTab] = useState('user');
-  const [username_email, setUsername_Email] = useState('');
-  const [password, setPassword] = useState('');
-  const [adminCNIC, setAdminCNIC] = useState('');
-  const [adminPassword, setAdminPassword] = useState('');
-  const [message, setMessage] = useState('');
-///User API
+  const [activeTab, setActiveTab] = useState("user");
+  const [username_email, setUsername_Email] = useState("");
+  const [password, setPassword] = useState("");
+  const [adminCNIC, setAdminCNIC] = useState("");
+  const [adminPassword, setAdminPassword] = useState("");
+  const [message, setMessage] = useState("");
+  ///User API
   const onUserSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(import.meta.env.VITE_LOGIN_USER_API, {
         username_email,
-        password
+        password,
       });
       if (response.status === 200) {
         setMessage(response.data.message);
@@ -29,13 +30,13 @@ const SignIn = () => {
       }
     }
   };
-///Admin API
+  ///Admin API
   const onAdminSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(import.meta.env.VITE_LOGIN_ADMIN_API, {
         cnic: adminCNIC,
-        password: adminPassword
+        password: adminPassword,
       });
       if (response.status === 200) {
         setMessage(response.data.message);
@@ -50,190 +51,222 @@ const SignIn = () => {
   };
 
   return (
-<section className="min-h-[85vh] flex justify-center items-center ">
-  <div className="w-full ">
-      <div className="max-w-7xl mx-auto flex rounded-2xl shadow-2xl overflow-hidden bg-white">
-        {/* Left Section - Image */}
-        <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-indigo-50 to-white items-center justify-center p-12">
-          <div className="relative w-full">
-            <div className="absolute inset-0 bg-indigo-100 rounded-full filter blur-3xl opacity-30 animate-pulse"></div>
-            <img 
-              src={img_signin} 
-              alt="Sign in illustration" 
-              className="relative w-full h-auto max-h-[800px] object-contain animate-float"
-            />
+    <section className="min-h-[85vh] flex justify-center items-center ">
+      <div className="w-full ">
+        <div className="max-w-7xl mx-auto flex rounded-2xl shadow-2xl overflow-hidden bg-white">
+          {/* Left Section - Image */}
+          <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-indigo-50 to-white items-center justify-center p-12">
+            <div className="relative w-full">
+              <div className="absolute inset-0 bg-indigo-100 rounded-full filter blur-3xl opacity-30 animate-pulse"></div>
+              <img
+                src={img_signin}
+                alt="Sign in illustration"
+                className="relative w-full h-auto max-h-[800px] object-contain animate-float"
+              />
+            </div>
           </div>
-        </div>
 
-        {/* Right Section - Tabs and Forms */}
-        <div className="flex-1 flex items-center justify-center p-8 lg:p-12">
-          <div className="w-full max-w-2xl space-y-8">
-            <div className="text-center">
-              <h2 className="text-4xl font-bold text-gray-900 tracking-tight">
-                Welcome Back
-              </h2>
-              <p className="mt-3 text-lg text-gray-600">
-                Sign in to your account
-              </p>
-            </div>
+          {/* Right Section - Tabs and Forms */}
+          <div className="flex-1 flex items-center justify-center p-8 lg:p-12">
+            <div className="w-full max-w-2xl space-y-8">
+              <div className="text-center">
+                <h2 className="text-4xl font-bold text-gray-900 tracking-tight">
+                  Welcome Back
+                </h2>
+                <p className="mt-3 text-lg text-gray-600">
+                  Sign in to your account
+                </p>
+              </div>
 
-            {/* Custom Tabs */}
-            <div className="flex rounded-lg overflow-hidden border border-gray-200">
-              <button
-                onClick={() => setActiveTab('user')}
-                className={`flex-1 py-3 text-lg font-semibold transition-all duration-200 
-                  ${activeTab === 'user' 
-                    ? 'bg-indigo-600 text-white' 
-                    : 'bg-white text-gray-600 hover:bg-gray-50'}`}
-              >
-                User Login
-              </button>
-              <button
-                onClick={() => setActiveTab('admin')}
-                className={`flex-1 py-3 text-lg font-semibold transition-all duration-200 
-                  ${activeTab === 'admin' 
-                    ? 'bg-indigo-600 text-white' 
-                    : 'bg-white text-gray-600 hover:bg-gray-50'}`}
-              >
-                Admin Login
-              </button>
-            </div>
+              {/* Custom Tabs */}
+              <div className="flex rounded-lg overflow-hidden border border-gray-200">
+                <button
+                  onClick={() => setActiveTab("user")}
+                  className={`flex-1 py-3 text-lg font-semibold transition-all duration-200 
+                  ${
+                    activeTab === "user"
+                      ? "bg-indigo-600 text-white"
+                      : "bg-white text-gray-600 hover:bg-gray-50"
+                  }`}
+                >
+                  User Login
+                </button>
+                <button
+                  onClick={() => setActiveTab("admin")}
+                  className={`flex-1 py-3 text-lg font-semibold transition-all duration-200 
+                  ${
+                    activeTab === "admin"
+                      ? "bg-indigo-600 text-white"
+                      : "bg-white text-gray-600 hover:bg-gray-50"
+                  }`}
+                >
+                  Admin Login
+                </button>
+              </div>
 
-            {/* User Login Form */}
-            {activeTab === 'user' && (
-              <form onSubmit={onUserSubmit} className="space-y-6">
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                    Email or Username
-                  </label>
-                  <input
-                    type="text"
-                    id="email"
-                    required
-                    className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
-                    placeholder="example@example.com"
-                    value={username_email}
-                    onChange={(e) => setUsername_Email(e.target.value)}
-                  />
-                </div>
+              {/* User Login Form */}
+              {activeTab === "user" && (
+                <>
+                  <div>
+                    <SocialLogin/>
+                    <span className="flex items-center pt-5 ">
+                      {" "}
+                      <div className="border-2 border-black w-[15rem]" /> OR
+                      <div className="border-2 border-black w-[15rem]" />{" "}
+                    </span>
+                  </div>
+                  <form onSubmit={onUserSubmit} className="space-y-6">
+                    <div>
+                      <label
+                        htmlFor="email"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        Email or Username
+                      </label>
+                      <input
+                        type="text"
+                        id="email"
+                        required
+                        className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                        placeholder="example@example.com"
+                        value={username_email}
+                        onChange={(e) => setUsername_Email(e.target.value)}
+                      />
+                    </div>
 
-                <div>
-                  <label htmlFor="userPassword" className="block text-sm font-medium text-gray-700">
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    id="userPassword"
-                    required
-                    className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </div>
+                    <div>
+                      <label
+                        htmlFor="userPassword"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        Password
+                      </label>
+                      <input
+                        type="password"
+                        id="userPassword"
+                        required
+                        className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                    </div>
 
-                <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <input
+                          type="checkbox"
+                          id="remember"
+                          className="h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500"
+                        />
+                        <label
+                          htmlFor="remember"
+                          className="ml-3 text-base text-gray-700"
+                        >
+                          Remember me
+                        </label>
+                      </div>
+                      <Link
+                        to="/forgot-password"
+                        className="font-semibold text-indigo-600 hover:text-indigo-500"
+                      >
+                        Forgot password?
+                      </Link>
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="w-full py-4 px-6 rounded-lg text-lg font-semibold text-white bg-indigo-600 hover:bg-indigo-700 transition-all duration-200 transform hover:scale-[1.02] shadow-lg hover:shadow-xl"
+                    >
+                      Sign In
+                    </button>
+
+                    <div className="text-center">
+                      <p className="text-base text-gray-600">
+                        Don't have an account?{" "}
+                        <Link
+                          to="/signup"
+                          className="font-semibold text-indigo-600 hover:text-indigo-500"
+                        >
+                          Create one here
+                        </Link>
+                      </p>
+                    </div>
+                  </form>
+                </>
+              )}
+
+              {/* Admin Login Form */}
+              {activeTab === "admin" && (
+                <form onSubmit={onAdminSubmit} className="space-y-6">
+                  <div>
+                    <label
+                      htmlFor="cnic"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      CNIC Number
+                    </label>
+                    <input
+                      type="text"
+                      id="cnic"
+                      required
+                      className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                      placeholder="Enter CNIC Number"
+                      value={adminCNIC}
+                      onChange={(e) => setAdminCNIC(e.target.value)}
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="adminPassword"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Password
+                    </label>
+                    <input
+                      type="password"
+                      id="adminPassword"
+                      required
+                      className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                      placeholder="Password"
+                      value={adminPassword}
+                      onChange={(e) => setAdminPassword(e.target.value)}
+                    />
+                  </div>
                   <div className="flex items-center">
                     <input
                       type="checkbox"
                       id="remember"
                       className="h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500"
                     />
-                    <label htmlFor="remember" className="ml-3 text-base text-gray-700">
-                      Remember me
-                    </label>
-                  </div>
-                  <Link
-                    to="/forgot-password"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >
-                    Forgot password?
-                  </Link>
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full py-4 px-6 rounded-lg text-lg font-semibold text-white bg-indigo-600 hover:bg-indigo-700 transition-all duration-200 transform hover:scale-[1.02] shadow-lg hover:shadow-xl"
-                >
-                  Sign In
-                </button>
-
-                <div className="text-center">
-                  <p className="text-base text-gray-600">
-                    Don't have an account?{' '}
-                    <Link
-                      to="/signup"
-                      className="font-semibold text-indigo-600 hover:text-indigo-500"
+                    <label
+                      htmlFor="remember"
+                      className="ml-3 text-base text-gray-700"
                     >
-                      Create one here
-                    </Link>
-                  </p>
-                </div>
-              </form>
-            )}
-
-            {/* Admin Login Form */}
-            {activeTab === 'admin' && (
-              <form onSubmit={onAdminSubmit} className="space-y-6">
-                <div>
-                  <label htmlFor="cnic" className="block text-sm font-medium text-gray-700">
-                    CNIC Number
-                  </label>
-                  <input
-                    type="text"
-                    id="cnic"
-                    required
-                    className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
-                    placeholder="Enter CNIC Number"
-                    value={adminCNIC}
-                    onChange={(e) => setAdminCNIC(e.target.value)}
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="adminPassword" className="block text-sm font-medium text-gray-700">
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    id="adminPassword"
-                    required
-                    className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
-                    placeholder="Password"
-                    value={adminPassword}
-                    onChange={(e) => setAdminPassword(e.target.value)}
-                  />
-                </div>
-                <div className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id="remember"
-                      className="h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500"
-                    />
-                    <label htmlFor="remember" className="ml-3 text-base text-gray-700">
                       Remember me
                     </label>
                   </div>
 
-                <button
-                  type="submit"
-                  className="w-full py-4 px-6 rounded-lg text-lg font-semibold text-white bg-indigo-600 hover:bg-indigo-700 transition-all duration-200 transform hover:scale-[1.02] shadow-lg hover:shadow-xl"
-                >
-                  Admin Login
-                </button>
-              </form>
-            )}
+                  <button
+                    type="submit"
+                    className="w-full py-4 px-6 rounded-lg text-lg font-semibold text-white bg-indigo-600 hover:bg-indigo-700 transition-all duration-200 transform hover:scale-[1.02] shadow-lg hover:shadow-xl"
+                  >
+                    Admin Login
+                  </button>
+                </form>
+              )}
 
-            {message && (
-              <div className="text-center text-sm font-medium text-gray-700">
-                {message}
-              </div>
-            )}
+              {message && (
+                <div className="text-center text-sm font-medium text-gray-700">
+                  {message}
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
 
-      <style>{`
+        <style>{`
         @keyframes float {
           0% { transform: translateY(0px); }
           50% { transform: translateY(-10px); }
@@ -250,7 +283,7 @@ const SignIn = () => {
           animation: pulse 4s ease-in-out infinite;
         }
       `}</style>
-    </div>
+      </div>
     </section>
   );
 };

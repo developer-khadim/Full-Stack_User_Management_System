@@ -4,7 +4,7 @@ import { Check } from 'lucide-react';
 import img_signup from '../assets/Sign-up.png';
 import Modal from 'react-modal';
 import axios from 'axios';
-import gsap from 'gsap';
+import { MdVerified } from "react-icons/md";
 
 
 // Ensure Modal is properly attached to the app root
@@ -22,7 +22,8 @@ const SignUp = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [otp, setOTP] = useState('');
+  const [otp, setOtp] = useState(Array(6).fill('')); // Array for OTP digits
+  const [isOTPVerified, setIsOTPVerified] = useState(false); // New state for OTP verification
 
   const navigate = useNavigate();
 
@@ -39,11 +40,10 @@ const SignUp = () => {
   // Handle OTP sending
   const handleSendOTP = async () => {
     if (!email && !username) {
-      setMessage('Please enter an email address first');
+      setMessage('Please enter an email address or username first');
       return;
     }
     try {
-      // Replace with your actual OTP sending API endpoint
       const response = await axios.post(import.meta.env.VITE_SEND_OTP_API, { email, username });
       if (response.status === 200) {
         openOTPModal();
@@ -57,9 +57,9 @@ const SignUp = () => {
   // Handle OTP verification
   const handleVerifyOTP = async () => {
     try {
-      // Replace with your actual OTP verification API endpoint
-      const response = await axios.post(import.meta.env.VITE_VERIFY_OTP_API, { email, otp });
+      const response = await axios.post(import.meta.env.VITE_VERIFY_OTP_API, { email, otp: otp.join('') }); // Join OTP array to string
       if (response.status === 200) {
+        setIsOTPVerified(true);
         closeOTPModal();
         setMessage(response.data.message);
       }
@@ -68,33 +68,62 @@ const SignUp = () => {
     }
   };
 
-  // OTP Modal Component
-  const OTPVerificationModal = () => (
-    <Modal
-      isOpen={isOTPModalOpen}
-      onRequestClose={closeOTPModal}
-      contentLabel="OTP Verification"
-      className="bg-white rounded-lg shadow-xl max-w-md mx-auto p-6 focus:outline-none"
-      overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
-    >
-      <div className="text-center">
-        <h2 className="text-2xl font-bold mb-4">Enter OTP</h2>
-        <input
-          type="text"
-          value={otp}
-          onChange={(e) => setOTP(e.target.value)}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg mb-4"
-          placeholder="Enter OTP"
-        />
-        <button
-          onClick={handleVerifyOTP}
-          className="w-full py-3 px-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
-        >
-          Verify OTP
-        </button>
-      </div>
-    </Modal>
-  );
+      // Handle OTP input change
+  const handleChange = (value, index) => {
+    if (!/^\d*$/.test(value)) return; // Allow only digits
+    const newOTP = [...otp];
+    newOTP[index] = value;
+    setOtp(newOTP);
+
+    // Move focus to the next input box
+    if (value && index < otp.length - 1) {
+      document.getElementById(`otp-input-${index + 1}`).focus();
+    }
+  };
+
+  // Handle key down (backspace) for OTP input
+  const handleKeyDown = (e, index) => {
+    if (e.key === 'Backspace' && !otp[index] && index > 0) {
+      document.getElementById(`otp-input-${index - 1}`).focus();
+    }
+  };
+  
+    // OTP Modal Component
+    const OTPVerificationModal = () => (
+      <Modal
+        isOpen={isOTPModalOpen}
+        onRequestClose={closeOTPModal}
+        contentLabel="OTP Verification"
+        className="bg-white rounded-lg shadow-xl max-w-md mx-auto p-6 focus:outline-none"
+        overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+      >
+        <div className="text-center">
+          <h2 className="text-2xl font-bold mb-4">Enter OTP</h2>
+          <div className="flex justify-center space-x-2 mb-6">
+            {otp.map((digit, index) => (
+              <input
+                key={index}
+                id={`otp-input-${index}`}
+                type="text"
+                value={digit}
+                onChange={(e) => handleChange(e.target.value, index)}
+                onKeyDown={(e) => handleKeyDown(e, index)}
+                className={`w-12 h-12 text-center text-lg border rounded-lg focus:ring-2 focus:ring-indigo-500 ${
+                  digit ? 'bg-green-200 border-green-500' : 'border-gray-300'
+                }`}
+                maxLength={1}
+              />
+            ))}
+          </div>
+          <button
+            onClick={handleVerifyOTP}
+            className="w-full py-3 px-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+          >
+            Verify OTP
+          </button>
+        </div>
+      </Modal>
+    );
 
   // Handle Submit Event
   const handleSubmit = async (e) => {
@@ -141,49 +170,8 @@ const SignUp = () => {
               className="mt-10 space-y-8"
               onSubmit={handleSubmit}
             >
-              <div className="relative">
-                  <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-                    Username
-                  </label>
-                  <input
-                    type="text"
-                    id="username"
-                    name="username"
-                    required
-                    className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-base"
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                  />
-                </div>
-              {/* Email & Phone */}
-              <div className="space-y-6">
-                <div className="relative">
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                    Email Address
-                  </label>
-                  <div className="flex gap-2">
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      required
-                      className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-base"
-                      placeholder="example@example.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <button
-                      type="button"
-                      onClick={handleSendOTP}
-                      className="mt-1 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors duration-200"
-                    >
-                      Send OTP
-                    </button>
-                  </div>
-                </div>
                 {/* Name Fields */}
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                 <div className="relative">
                   <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
                     First Name
@@ -215,6 +203,50 @@ const SignUp = () => {
                   />
                 </div>
               </div>
+              <div className="relative">
+                  <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+                    Username
+                  </label>
+                  <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    required
+                    className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-base"
+                    placeholder="Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                </div>
+              {/* Email & Phone */}
+              <div className="space-y-6">
+                <div className="relative">
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                    Email Address
+                  </label>
+                  <div className="flex gap-2">
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      className={`mt-1 block w-full px-4 py-3 border rounded-lg bg-white shadow-sm transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-base ${
+                        isOTPVerified ? 'border-green-500 , border-[3px]' : ''
+                      }`}
+                      placeholder="example@example.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <button
+                      type="button"
+                      onClick={handleSendOTP}
+                      className="mt-1 px-4 py-2 bg-indigo-600 text-white text-sm rounded-lg font-bold hover:bg-indigo-700 transition-colors duration-200"
+                    >
+                      {isOTPVerified ? <MdVerified  size={20} /> : 'Send OTP'}
+                    </button>
+                  </div>
+                </div>
+              
                 <div className="relative">
                   <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
                     Contact Number
@@ -279,9 +311,9 @@ const SignUp = () => {
                 >
                   Create Account
                 </button>
+                
               </div>
               <div className='w-full text-center text-red-500 font-semibold'>{message}</div>
-
               {/* Login Link */}
               <div className="text-center">
                 <p className="text-base text-gray-600">
@@ -353,7 +385,7 @@ const SignUp = () => {
             </button>
           </div>
         </Modal>
-
+        {/* OTP Component */}
         <OTPVerificationModal />
 
         {/* CSS for animations */}
