@@ -10,30 +10,28 @@ const Navbar = () => {
   const navigation = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
-    { name: 'Sign In', path: '/signin' },
-    { name: 'Sign Up', path: '/signup' },
   ];
 
   const isActivePath = (path) => location.pathname === path;
 
   return (
-    <nav className="bg-black font-bold">
+    <nav className="bg-black text-white font-bold shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
+        <div className="flex items-center justify-between h-16">
           {/* Logo/Brand */}
           <div className="flex items-center">
             <Link to="/" className="flex-shrink-0">
-              <img src={logo} alt="Logo" className="w-20" />
+              <img src={logo} alt="Logo" className="w-24" />
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-4">
+          {/* Center Navigation */}
+          <div className="hidden md:flex items-center space-x-6">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
+                className={`px-3 py-2 rounded-md text-[16px] font-bold transition-colors duration-200 ${
                   isActivePath(item.path)
                     ? 'bg-white text-black'
                     : 'text-white hover:bg-white hover:text-black'
@@ -42,6 +40,22 @@ const Navbar = () => {
                 {item.name}
               </Link>
             ))}
+          </div>
+
+          {/* Right-side Buttons */}
+          <div className="hidden md:flex items-center space-x-4">
+            <Link
+              to="/signin"
+              className="px-4 py-3 bg-blue-500 text-white rounded-md text-sm font-bold hover:bg-blue-600 transition-colors"
+            >
+              Sign In
+            </Link>
+            <Link
+              to="/signup"
+              className="px-4 py-3 bg-green-500 text-white rounded-md text-sm font-bold hover:bg-green-600 transition-colors"
+            >
+              Sign Up
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -75,6 +89,20 @@ const Navbar = () => {
                 {item.name}
               </Link>
             ))}
+            <Link
+              to="/signin"
+              className="block px-3 py-2 bg-blue-500 text-white rounded-md text-base font-medium hover:bg-blue-600 transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              Sign In
+            </Link>
+            <Link
+              to="/signup"
+              className="block px-3 py-2 bg-green-500 text-white rounded-md text-base font-medium hover:bg-green-600 transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              Sign Up
+            </Link>
           </div>
         </div>
       )}

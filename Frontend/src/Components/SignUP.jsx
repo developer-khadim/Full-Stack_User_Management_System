@@ -379,7 +379,7 @@ const SignUp = () => {
             </p>
             <button
               onClick={closeSuccessModal}
-              className="w-full py-3 px-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors duration-200 cursor-pointer"
+              className="w-full py-3 px-4 font-bold  bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors duration-200 cursor-pointer"
             >
               Continue to Login
             </button>
