@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const app = express();
 const userRouter = require('./routes/user.router')
+const adminRouter = require('./routes/admin.router')
 const imageModel = require('./models/image.model')
 const { connectDB } = require('./config/dbConnection');
 
@@ -21,6 +22,28 @@ app.use(express.static(path.join(__dirname, 'public')));
 require('dotenv').config();
 connectDB(); // Connect to database
 
+const adminModel = require('./models/admin.model')
+
+
+app.get('/admin', async (req, res) => {
+      
+    const add = await adminModel.create(
+        {
+            cnic: "00000-1234567-8", // String with the correct CNIC pattern
+            name: {
+                firstName: "Khadim",
+                lastName: "Ali"
+            },
+            email: "khadim.ali@gmail.com", // Valid email address
+            password: "khadim123",  // khadim123
+            contact: ["1234567890", "0987654321"], // Array of contact numbers (strings)
+            isAdmin: true, // Boolean
+        
+        }
+    )
+      res.status(200).send('Admin created successfully')
+
+})
 
 
 app.get('/image', (req, res) => {
@@ -36,6 +59,8 @@ app.get('/image', (req, res) => {
 
 // Routes
 app.use('/user', userRouter)
+app.use('/admin', adminRouter)
+
 
 // Export the app
 module.exports = app;
