@@ -24,7 +24,7 @@ This web application provides a platform for users to create an account, sign in
   - React Router for routing
   - Axios for making HTTP requests
   - React Modal for user interactions
-  -npm install gsap
+  -npm i framer-motion
 - **Backend**:
   - Node.js
   - Express.js
