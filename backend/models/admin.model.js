@@ -27,7 +27,7 @@ const bcrypt = require('bcrypt');
             type: String,
             required: true,
         },
-        contact: [],
+        contact: { type: [String], required: true },
         isAdmin: {
           type: Boolean,
           default: true,

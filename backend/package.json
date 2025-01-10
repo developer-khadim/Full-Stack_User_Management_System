@@ -20,6 +20,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.9.3",
     "nodemailer": "^6.9.16",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
     "validator": "^13.12.0"
   }
 }

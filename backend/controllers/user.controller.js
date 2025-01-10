@@ -1,3 +1,4 @@
+//********** User Controller  */
 const userModel = require('../models/user.model')
 const { generateToken } = require('../utils/generateToken')
 const { validationResult } = require('express-validator')
@@ -53,6 +54,38 @@ module.exports.registerUser = async (req, res) => {
     }
 }
 
+// Login with Google Account
+module.exports.googleLogin = async (profile, cb) => {
+    try {
+        // check is the user in Database
+       const chk_user = await userModel.findOne({ email: profile.emails[0].value })
+     
+       if(chk_user){ 
+           const token = generateToken(chk_user)
+           cb(null, chk_user)
+           return
+       } else {
+            const user = await userModel.create({
+             username: profile.displayName,
+             name: {
+               firstName: profile.name.givenName,
+               lastName: profile.name.familyName ? profile.name.familyName : "" 
+             },
+             email: profile.emails[0].value,
+             picture: profile.photos[0].value,
+             password: "", // No password for Google users
+        
+       });
+       const token = generateToken(user) 
+          cb(null , user)
+          return
+       }
+    } catch(error) {
+        cb(error);
+    }
+}
+
+// User Login
 module.exports.userLogin = async (req, res) => {
     
     let error = validationResult(req);
@@ -87,6 +120,7 @@ module.exports.userLogin = async (req, res) => {
     }
 }
 
+// Send OTP to verify Email
 module.exports.sendOTP = async (req, res) => {
            
     let error = validationResult(req);
@@ -120,7 +154,8 @@ module.exports.sendOTP = async (req, res) => {
     }
 }
 
-module.exports.otp = async(req, res) => {
+
+module.exports.otpVarification = async (req, res) => {
     
      let { email, otp } = req.body
 

@@ -55,7 +55,7 @@ router.post('/verify-otp',
                   .notEmpty()
                   .withMessage('Please fill the OTP')
          ],
-         userController.otp
+         userController.otpVarification
 )
 
 module.exports = router

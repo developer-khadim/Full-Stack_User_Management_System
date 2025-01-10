@@ -7,16 +7,17 @@ const userSchema = new mongoose.Schema({
                 type: String,
                 unique: true,
                 required: true,
-                minLength: [5, 'Username must be at least 5 characters']
+                minLength: [3, 'Username must be at least 5 characters']
             },
             name: {
                 firstName: {
                     type: String,
+                    default: '',
                     required: true,
                 },
                 lastName: {
                     type: String,
-                    required: true,
+                    default: ''
             } },
             email: {
                 type: String,
@@ -26,7 +27,6 @@ const userSchema = new mongoose.Schema({
             },
             password: {
                 type: String,
-                required: true,
             },
             contact: [], // Contact 
             isApproved: { type: Boolean, },
