@@ -15,7 +15,7 @@ pids/
 *.pid.lock
 
 # Environment variables
-#.env
+.env
 
 # Directory for local env files
 .env.local
