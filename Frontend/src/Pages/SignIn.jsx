@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import img_signin from "../assets/login.png";
-import { SocialLogin } from "./SocialLogin";
+import { SocialLogin } from "../Components/SocialLogin";
 import LoginSuccessModal from "../Components/LoginSuccess";
 import axios from "axios";
 
@@ -63,6 +63,10 @@ const SignIn = () => {
       );
     }
   };
+
+  useEffect(() => {
+    document.title = 'Sign-in | User Management'; // Setting the title of the document
+  }, []);
 
   return (
     <section className="min-h-[85vh] flex justify-center items-center bg-gray-50">

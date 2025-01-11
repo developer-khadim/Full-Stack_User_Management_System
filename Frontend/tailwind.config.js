@@ -1,9 +1,11 @@
 module.exports = {
-  content: [
-    './src/**/*.{html,js,jsx,ts,tsx}', // Ensure your React files are being watched
-  ],
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      boxShadow: {
+        '3xl': '0 10px 25px rgba(0, 0, 0, 0.3)',
+      },
+    },
   },
   plugins: [],
 };

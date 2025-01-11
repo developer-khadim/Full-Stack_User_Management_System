@@ -1,10 +1,10 @@
-// App.jsx
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './Components/Navbar';
 import Home from './Pages/Home';
-import SignIn from './Components/SignIn';
-import SignUP from './Components/SignUP';
+import SignIn from './Pages/SignIn';
+import SignUP from './Pages/SignUP';
 import User_Dashbord from './Pages/User_Dashbord';
 import { Admin_Dashbord } from './Pages/Admin_Dashbord';
 import About from './Pages/About ';
