@@ -9,6 +9,7 @@ import User_Dashbord from './Pages/User_Dashbord';
 import { Admin_Dashbord } from './Pages/Admin_Dashbord';
 import About from './Pages/About ';
 import ForgetPassword from './Components/Forgot_Pasword';
+import Futures from './Pages/Futures';
 
 function App() {
   
@@ -26,6 +27,7 @@ function App() {
             <Route path="/User_dashboard" element={<User_Dashbord/>} /> // Fixed typo in route
             <Route path="/Admin_dashboard" element={<Admin_Dashbord/>} />
             <Route path='/forgot_password' element={<ForgetPassword/>}  />
+            <Route path='futures' element={<Futures/>} />
           </Routes>
         </main>
       </div>
