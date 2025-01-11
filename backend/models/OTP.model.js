@@ -4,7 +4,9 @@ const mongoose = require('mongoose')
 const otpSchema = new mongoose.Schema({
     otp: {
         type: String,
-        required: true
+        required: true,
+        minLength: 4,
+        maxLength: 4
     },
     username: {
         type: String,

@@ -5,29 +5,7 @@ import Twitter from '../assets/twitter.png';
 
 export const SocialLogin = () => {
 
-  // const googleWithLogin = () => {
-  //   const width = 600;
-  //   const height = 600;
-  //   const left = (window.innerWidth / 2) - (width / 2);
-  //   const top = (window.innerHeight / 2) - (height / 2);
-    
-  //   const popup = window.open(
-  //       'http://localhost:4000/auth/google', 
-  //       'Google Login', 
-  //       `width=${width},height=${height},top=${top},left=${left}`
-  //   );
-
-  //   const checkWindow = setInterval(() => {
-  //     if (popup.closed) {
-  //         clearInterval(checkWindow);
-  //         // Perform actions after window closes, e.g., refresh the page or get the user data
-  //         console.log('Popup closed');
-  //     }
-  // }, 1000);
-
-  // }
-
-  const googleWithLogin = () => {    
+    const googleWithLogin = () => {    
     window.open('http://localhost:4000/auth/google', '_self');
 };
   

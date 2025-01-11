@@ -62,7 +62,7 @@ module.exports.googleLogin = async (profile, cb) => {
      
        if(chk_user){ 
            const token = generateToken(chk_user)
-           cb(null, token)  // Return the user
+           cb(null, {user: chk_user, token})  // Return the user
            return
        } else {
             const user = await userModel.create({
@@ -77,7 +77,7 @@ module.exports.googleLogin = async (profile, cb) => {
         
        });
        const token = generateToken(user) 
-          cb(null , token)
+          cb(null , {user, token})
           return
        }
     } catch(error) {
