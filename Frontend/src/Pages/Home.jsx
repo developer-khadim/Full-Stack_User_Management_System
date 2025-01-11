@@ -9,6 +9,7 @@ import {
   Video,
   ArrowRight
 } from 'lucide-react';
+import Footer from '../Components/Footer';
 
 const HomePage = () => {
   useEffect(() => {
@@ -154,6 +155,7 @@ const HomePage = () => {
           </div>
         </div>
       </motion.div>
+      <Footer/>
     </div>
   );
 };

@@ -16,6 +16,7 @@ import {
   Cloud,
   FileCheck
 } from 'lucide-react';
+import Footer from '../Components/Footer';
 
 const Features = () => {
   useEffect(() => {
@@ -116,7 +117,7 @@ const Features = () => {
 
       {/* Main Features Grid */}
       <motion.div 
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8"
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 "
         variants={staggerContainer}
         initial="hidden"
         animate="visible"
@@ -166,6 +167,7 @@ const Features = () => {
           ))}
         </div>
       </motion.div>
+      <Footer/>
     </div>
   );
 };

@@ -13,6 +13,7 @@ import {
   MapPin,
   Shield
 } from 'lucide-react';
+import Footer from '../Components/Footer';
 
 const About = () => {
   useEffect(() => {
@@ -80,7 +81,7 @@ const About = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.2, duration: 0.5 }}
     >
-      <div className="flex justify-center mb-2">
+      <div className="flex justify-center m-2 ">
         <stat.icon className="h-8 w-8 text-blue-600" />
       </div>
       <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
@@ -219,7 +220,7 @@ const About = () => {
       </div>
 
       {/* Footer */}
-     
+     <Footer/>
     </div>
   );
 };
