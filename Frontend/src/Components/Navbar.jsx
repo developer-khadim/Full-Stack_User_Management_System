@@ -10,7 +10,9 @@ const Navbar = () => {
   const navigation = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
+    { name: 'Futures', path: '/futures' },
   ];
+  
 
   const isActivePath = (path) => location.pathname === path;
 
@@ -49,12 +51,6 @@ const Navbar = () => {
               className="px-4 py-3 bg-blue-500 text-white rounded-md text-sm font-bold hover:bg-blue-600 transition-colors"
             >
               Sign In
-            </Link>
-            <Link
-              to="/signup"
-              className="px-4 py-3 bg-green-500 text-white rounded-md text-sm font-bold hover:bg-green-600 transition-colors"
-            >
-              Sign Up
             </Link>
           </div>
 
