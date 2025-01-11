@@ -42,8 +42,8 @@ export const SocialLogin = () => {
         {/* Twitter Button */}
         <button
           className="flex items-center justify-center w-full sm:w-24 h-10 sm:h-12
-            rounded-lg border border-[#1DA1F2] bg-[#1DA1F2]
-            hover:bg-[#1A8CD8]
+            rounded-lg border border-[black] bg-black/90
+            hover:bg-black
             transition-all duration-200 shadow-sm
             hover:shadow group"
         >
