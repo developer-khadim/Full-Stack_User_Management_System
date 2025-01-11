@@ -4,6 +4,33 @@ import Facebook from '../assets/facebook.png';
 import Twitter from '../assets/twitter.png';
 
 export const SocialLogin = () => {
+
+  // const googleWithLogin = () => {
+  //   const width = 600;
+  //   const height = 600;
+  //   const left = (window.innerWidth / 2) - (width / 2);
+  //   const top = (window.innerHeight / 2) - (height / 2);
+    
+  //   const popup = window.open(
+  //       'http://localhost:4000/auth/google', 
+  //       'Google Login', 
+  //       `width=${width},height=${height},top=${top},left=${left}`
+  //   );
+
+  //   const checkWindow = setInterval(() => {
+  //     if (popup.closed) {
+  //         clearInterval(checkWindow);
+  //         // Perform actions after window closes, e.g., refresh the page or get the user data
+  //         console.log('Popup closed');
+  //     }
+  // }, 1000);
+
+  // }
+
+  const googleWithLogin = () => {    
+    window.open('http://localhost:4000/auth/google', '_self');
+};
+  
   return (
     <div className="w-full flex justify-center px-4">
       <div className="w-full max-w-[30rem] flex items-center justify-center gap-2 sm:gap-4">
@@ -14,6 +41,7 @@ export const SocialLogin = () => {
             hover:bg-gray-50 hover:border-gray-300
             transition-all duration-200 shadow-sm
             hover:shadow group"
+          onClick={googleWithLogin}
         >
           <img
             src={Google}

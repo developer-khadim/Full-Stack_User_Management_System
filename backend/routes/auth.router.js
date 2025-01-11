@@ -12,9 +12,21 @@ router.get('/auth/google',
 router.get("/auth/google/callback", 
           passport.authenticate('google', { session: false }),
           async (req, res) => {
-            const user = req.user
-            res.status(200).send(user)
+            const token = req.user
+            await req.logout(() => {
+              console.log('logged out')
+            })
+            
          }
         ),
-          
+
+router.get('/auth/success', (req, res) => {
+        res.send({token: req.query?.token})
+})
+
+router.get('/auth/logout', (req, res) => {
+       // use this route for logout to user 
+})
 module.exports = router
+
+//http://localhost:5173/Admin_dashboar
