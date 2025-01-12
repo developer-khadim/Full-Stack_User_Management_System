@@ -19,12 +19,6 @@ import About from './Pages/About ';
 import Futures from './Pages/Futures'
 import UserProtectWrapper from './Pages/UserProtectWrapper'
 
-import User_Dashbord from './Pages/User_Dashbord';
-import { Admin_Dashbord } from './Pages/Admin_Dashbord';
-import About from './Pages/About ';
-import ForgetPassword from './Components/Forgot_Pasword';
-import Futures from './Pages/Futures';
-
 
 function App() {
   
@@ -47,8 +41,6 @@ function App() {
                  <User_Dashborad/>
             </UserProtectWrapper>
             } />
-
-            <Route path="/User_dashboard" element={<User_Dashbord/>} /> // Fixed typo in route
 
             <Route path="/Admin_dashboard" element={<Admin_Dashbord/>} />
             <Route path='/forgot_password' element={<ForgetPassword/>}  />
