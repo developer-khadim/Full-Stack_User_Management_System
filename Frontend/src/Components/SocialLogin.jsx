@@ -5,12 +5,10 @@ import Twitter from '../assets/twitter.png';
 
 export const SocialLogin = () => {
 
-
     const googleWithLogin = () => {    
     window.open('http://localhost:4000/auth/google', '_self');
 };
   
-
   return (
     <div className="w-full flex justify-center px-4">
       <div className="w-full max-w-[30rem] flex items-center justify-center gap-2 sm:gap-4">
@@ -22,9 +20,7 @@ export const SocialLogin = () => {
             transition-all duration-200 shadow-sm
             hover:shadow group"
 
-
           onClick={googleWithLogin}
-
 
         >
           <img

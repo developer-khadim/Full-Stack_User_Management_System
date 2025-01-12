@@ -123,8 +123,9 @@ module.exports.userLogin = async (req, res) => {
             .json({message: "User logined Successfully", user: { ...existedUser.toObject(), password: undefined }, 
             token
              })
+
     }   catch(error) {
-        res.status(500).json({ Error: error.message });
+       return  res.status(500).json({ Error: error.message });
     }
 }
 

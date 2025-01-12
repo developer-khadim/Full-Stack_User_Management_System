@@ -66,5 +66,6 @@ app.use('/user', userRouter)
 app.use('/admin', adminRouter)
 app.use(authRouter)
 
+
 // Export the app
 module.exports = app;

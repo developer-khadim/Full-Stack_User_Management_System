@@ -19,9 +19,7 @@ router.post('/login',
      
 )
 
-
 // Get Admin Profile
 router.get('/profile', authMiddleware.adminAuth, adminController.getAdminProfile)
-
 
 module.exports = router
