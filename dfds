@@ -1,0 +1,226 @@
+[33mcommit f787290338e40010e15cc2c1fa3faebfbeb1ad49[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Kaif-Sasoli <kaifsasoli1@gmail.com>
+Date:   Sun Jan 12 11:22:45 2025 +0500
+
+    I have to push
+
+[33mcommit d8b7a434a137b2fe111db3f3eddd75225e191eb5[m
+Author: Kaif-Sasoli <kaifsasoli1@gmail.com>
+Date:   Sun Jan 12 10:56:02 2025 +0500
+
+    User Wrapper is added
+
+[33mcommit f6dd5330dd3da2a6b5b1b23dc7b0143795630a71[m
+Author: Kaif-Sasoli <kaifsasoli1@gmail.com>
+Date:   Sat Jan 11 20:53:09 2025 +0500
+
+    Google
+
+[33mcommit e60a2e2b66ced7c4ebc09be7038a3dc0edf0a03d[m
+Merge: 98a8922 cd889fa
+Author: Kaif-Sasoli <kaifsasoli1@gmail.com>
+Date:   Sat Jan 11 20:23:01 2025 +0500
+
+    Merge branch 'main' of https://github.com/developer-khadim/Full-Stack_User_Management_System
+
+[33mcommit 98a89228e869d09155a338681440b94a604bcca3[m
+Author: Kaif-Sasoli <kaifsasoli1@gmail.com>
+Date:   Sat Jan 11 20:20:57 2025 +0500
+
+    Google
+
+[33mcommit cd889fa20134d0a18cf4e518a0a29c5e9e76fa19[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: developer-khadim <khadimalisoomro05@gmail.com>
+Date:   Sat Jan 11 19:57:01 2025 +0500
+
+    Footer-added
+
+[33mcommit ef579da9298a8027f2ec905f04c189ae428f164a[m
+Author: developer-khadim <khadimalisoomro05@gmail.com>
+Date:   Sat Jan 11 16:44:00 2025 +0500
+
+    Home,About,futures_Pages_added
+
+[33mcommit 2f5b79cf126250339dbf376c12621cf23e6ee002[m
+Author: Kaif-Sasoli <kaifsasoli1@gmail.com>
+Date:   Sat Jan 11 10:39:50 2025 +0500
+
+    Remove .env from Git tracking
+
+[33mcommit f77450dfcebffccded4072b94d62f04835f7b730[m
+Merge: 6276e65 d86628b
+Author: Kaif-Sasoli <kaifsasoli1@gmail.com>
+Date:   Sat Jan 11 10:22:27 2025 +0500
+
+    Merge branch 'main' of https://github.com/developer-khadim/Full-Stack_User_Management_System
+
+[33mcommit 6276e65adaa66b75dfd7648437212156ccbb70d7[m
+Author: Kaif-Sasoli <kaifsasoli1@gmail.com>
+Date:   Sat Jan 11 10:21:57 2025 +0500
+
+    auth router
+
+[33mcommit d86628bcb4f631d8bd7d785a266575b7706ccecc[m
+Author: developer-khadim <khadimalisoomro05@gmail.com>
+Date:   Sat Jan 11 05:11:18 2025 +0500
+
+    some_changes
+
+[33mcommit be474f06bd6304d84ccdfd2e821981b050b1b2bb[m
+Author: Kaif-Sasoli <kaifsasoli1@gmail.com>
+Date:   Fri Jan 10 17:15:14 2025 +0500
+
+    Trying to Push Code
+
+[33mcommit 0afbebef0197ca46d3c44e32ea21c6d4647f1365[m
+Author: Kaif-Sasoli <kaifsasoli1@gmail.com>
+Date:   Fri Jan 10 16:59:59 2025 +0500
+
+    Pull Forgot password
+
+[33mcommit 16bf36a09386ff58afd8a64cf0b0ffa1368b9591[m
+Author: developer-khadim <khadimalisoomro05@gmail.com>
+Date:   Fri Jan 10 04:12:32 2025 +0500
+
+    forgot_password
+
+[33mcommit d9d59cbfe6df63687164ccc2b43e9c0acd87af1d[m
+Author: Kaif-Sasoli <kaifsasoli1@gmail.com>
+Date:   Thu Jan 9 19:40:25 2025 +0500
+
+    Admin login
+
+[33mcommit 6857e71b22431330df96b56aa3d6e18f1b132d1c[m
+Author: developer-khadim <khadimalisoomro05@gmail.com>
+Date:   Thu Jan 9 19:34:34 2025 +0500
+
+    tab_,_button_and_same_Changes_SignUP
+
+[33mcommit 0578f9030bbf429976246f612a2a4e9b72d2947b[m
+Author: developer-khadim <khadimalisoomro05@gmail.com>
+Date:   Thu Jan 9 13:22:38 2025 +0500
+
+    admin_tab_add
+
+[33mcommit 8862266d8b130229a41ba692e0f228087677f872[m
+Author: Kaif-Sasoli <kaifsasoli1@gmail.com>
+Date:   Thu Jan 9 13:09:46 2025 +0500
+
+    OTP Verified
+
+[33mcommit 4de77aa2fb5c7e1019e08c16998bb75dd842bccd[m
+Author: Kaif-Sasoli <kaifsasoli1@gmail.com>
+Date:   Thu Jan 9 04:26:34 2025 +0500
+
+    SendEmail
+
+[33mcommit ed23e34cd67abf78273fce6df776fc4893828c1b[m
+Author: Kaif-Sasoli <kaifsasoli1@gmail.com>
+Date:   Thu Jan 9 02:52:51 2025 +0500
+
+    Email
+
+[33mcommit 26af842487ace1183d592235bf1e2ef5ef58892b[m
+Author: Kaif-Sasoli <kaifsasoli1@gmail.com>
+Date:   Thu Jan 9 02:47:39 2025 +0500
+
+    Conflict
+
+[33mcommit def65fbbd6306fad74418d65226dd43f539ae603[m
+Merge: 8b71350 847c45b
+Author: Kaif-Sasoli <kaifsasoli1@gmail.com>
+Date:   Thu Jan 9 02:45:00 2025 +0500
+
+    Email
+
+[33mcommit 8b713507cf2999696e440984b7ac0c5fdf75680d[m
+Author: Kaif-Sasoli <kaifsasoli1@gmail.com>
+Date:   Thu Jan 9 02:43:36 2025 +0500
+
+    Email
+
+[33mcommit 847c45bd9047c2c45d01c16efa6176c0788c2b2b[m
+Author: developer-khadim <khadimalisoomro05@gmail.com>
+Date:   Thu Jan 9 02:21:10 2025 +0500
+
+    addOTPbtn
+
+[33mcommit 700a36e6360e8d83c3bb6a153cf23af692ede932[m
+Merge: 1110743 74f4e13
+Author: Kaif-Sasoli <kaifsasoli1@gmail.com>
+Date:   Wed Jan 8 22:51:36 2025 +0500
+
+    Merge branch 'main' of https://github.com/developer-khadim/Full-Stack_User_Management_System
+
+[33mcommit 1110743c443c03f9146de153546ab76c62fd9e7b[m
+Author: Kaif-Sasoli <kaifsasoli1@gmail.com>
+Date:   Wed Jan 8 22:39:28 2025 +0500
+
+    Login API
+
+[33mcommit 74f4e134754597d2f67d627c9d14c2d13fc5cccb[m
+Author: developer-khadim <khadimalisoomro05@gmail.com>
+Date:   Wed Jan 8 20:34:05 2025 +0500
+
+    pop-up
+
+[33mcommit 67c37d732254a415e43a3e5b9c11ad384f69431e[m
+Author: Kaif-Sasoli <kaifsasoli1@gmail.com>
+Date:   Wed Jan 8 17:18:34 2025 +0500
+
+    Register API complted
+
+[33mcommit 9cda30a0ef4a5af465eea811a97a9de1eddab401[m
+Merge: 5a30498 04c8e81
+Author: Kaif-Sasoli <kaifsasoli1@gmail.com>
+Date:   Wed Jan 8 06:18:13 2025 +0500
+
+    Merge branch 'main' of https://github.com/developer-khadim/Full-Stack_User_Management_System
+
+[33mcommit 5a30498864fa1e057a70307fbcffbc139f877424[m
+Author: Kaif-Sasoli <kaifsasoli1@gmail.com>
+Date:   Wed Jan 8 05:53:12 2025 +0500
+
+    Register User
+
+[33mcommit 04c8e81234ec8d25a7f4479492f666a7d3d455e7[m
+Author: developer-khadim <khadimalisoomro05@gmail.com>
+Date:   Wed Jan 8 04:36:45 2025 +0500
+
+    signin
+
+[33mcommit 80b890a2614ac448bb29749018cf37d6b1dfb163[m
+Author: developer-khadim <khadimalisoomro05@gmail.com>
+Date:   Wed Jan 8 04:18:32 2025 +0500
+
+    signin
+
+[33mcommit 6ea4cd4c7a9080ae125a40f3379c4aed6bf586c3[m
+Author: developer-khadim <khadimalisoomro05@gmail.com>
+Date:   Wed Jan 8 02:31:47 2025 +0500
+
+    signin
+
+[33mcommit 867054a0a20be540edacc0d75bad6ea1528f8900[m
+Author: developer-khadim <khadimalisoomro05@gmail.com>
+Date:   Tue Jan 7 21:09:34 2025 +0500
+
+    signup
+
+[33mcommit 245882e461f95bcbeba42bcfdaa15b7a4b28ce26[m
+Author: developer-khadim <khadimalisoomro05@gmail.com>
+Date:   Tue Jan 7 19:26:19 2025 +0500
+
+    fontend
+
+[33mcommit 83deeb65633a3d1ee8b03e12edb09c2918bbe238[m
+Author: developer-khadim <khadimalisoomro05@gmail.com>
+Date:   Tue Jan 7 16:13:28 2025 +0500
+
+    USM
+
+[33mcommit 67ddb15d5323e0923101578322b6e4dca08bc1ab[m
+Author: developer-khadim <khadimalisoomro05@gmail.com>
+Date:   Tue Jan 7 16:12:26 2025 +0500
+
+    first commit
