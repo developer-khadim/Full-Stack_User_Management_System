@@ -64,5 +64,4 @@ router.post('/verify-otp',
 router.get('/profile', authMiddleware.userAuth, userController.getProfile)
 
          
-
 module.exports = router

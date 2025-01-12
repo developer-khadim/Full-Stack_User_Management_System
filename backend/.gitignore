@@ -16,8 +16,6 @@ pids/
 
 # Environment variables
 .env
-.env.local
-.env.*.local
 
 # Directory for local env files
 .env.local

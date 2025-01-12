@@ -35,6 +35,11 @@ const bcrypt = require('bcrypt');
             type: Boolean,
             default: true,
         },
+        isAdmin: {
+          type: Boolean,
+          default: true,
+
+        },
         picture: String,
   });
 

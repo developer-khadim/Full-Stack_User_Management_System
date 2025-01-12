@@ -3,8 +3,6 @@ const { validationResult } = require('express-validator')
 const { generateToken } = require('../utils/generateToken')
 
 
-
-
 // Admin Login
 module.exports.adminLogin = async (req, res) => {
       
@@ -29,7 +27,8 @@ module.exports.adminLogin = async (req, res) => {
              })
         }
     } catch(error){
-        res.status(500).json({ Error: error.message });
+
+        return res.status(500).json({ Error: error.message });
     }
 }
 
@@ -39,4 +38,5 @@ module.exports.getAdminProfile = async (req, res) => {
      res.status(200).json(req.admin)
 
     }
+
 
