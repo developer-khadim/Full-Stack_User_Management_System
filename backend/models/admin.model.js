@@ -27,10 +27,13 @@ const bcrypt = require('bcrypt');
             type: String,
             required: true,
         },
-        contact: { type: [String], required: true },
+        contact: {
+            type: String,
+            default: []
+        },
         isAdmin: {
-          type: Boolean,
-          default: true,
+            type: Boolean,
+            default: true,
         },
         picture: String,
   });

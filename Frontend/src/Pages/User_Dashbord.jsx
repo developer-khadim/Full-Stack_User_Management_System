@@ -2,9 +2,9 @@ import React from 'react'
 
 const User_Dashbord = () => {
   return (
-    <>
-    <div><h1 className='text-black'>I have dat </h1></div>
-    </>
+
+    
+    <div className='text-5xl' >   welcome to User_Dashbord</div>
   )
 }
 

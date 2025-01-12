@@ -56,10 +56,13 @@ router.post('/verify-otp',
                   .notEmpty()
                   .withMessage('Please fill the OTP')
          ],
+
          userController.otpVarification
 )
 
 // getProfile Route
 router.get('/profile', authMiddleware.userAuth, userController.getProfile)
+
+         
 
 module.exports = router

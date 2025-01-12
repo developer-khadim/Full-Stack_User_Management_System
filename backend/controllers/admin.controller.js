@@ -4,6 +4,7 @@ const { generateToken } = require('../utils/generateToken')
 
 
 
+
 // Admin Login
 module.exports.adminLogin = async (req, res) => {
       
@@ -36,4 +37,6 @@ module.exports.adminLogin = async (req, res) => {
 module.exports.getAdminProfile = async (req, res) => {
 
      res.status(200).json(req.admin)
-}
+
+    }
+

@@ -6,6 +6,7 @@ const path = require('path');
 const app = express();
 const userRouter = require('./routes/user.router')
 const adminRouter = require('./routes/admin.router')
+
 const authRouter = require('./routes/auth.router')
 const imageModel = require('./models/image.model')
 const { connectDB } = require('./config/dbConnection')
@@ -64,7 +65,9 @@ app.get('/image', (req, res) => {
 // Routes
 app.use('/user', userRouter)
 app.use('/admin', adminRouter)
+
 app.use(authRouter)
+
 
 
 // Export the app
