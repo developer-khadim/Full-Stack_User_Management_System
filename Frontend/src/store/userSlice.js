@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from 'axios'
 
 // Initail state of store
 const initialState = {
-     userData: null,
-     token: null,
      loading: false,
+     token: null,
+     userData: null,
      error: null
 }
 
@@ -24,9 +25,19 @@ export const handleGoogleCallback = createAsyncThunk(
 const userSlice = createSlice({
       name: 'user',
       initialState,
-      reducers: {},
+      reducers: {
+          setUserData(action, state){
+               state.loading = false
+               state.token = action.payload?.token || null
+               state.userData = action.payload?.userData || null
+               state.error = null
+
+          }
+      },
       extraReducers: (builder) => {
           builder
+
+          // Handle data come from GoogleApi
           .addCase(handleGoogleCallback.pending, (state) => {
                state.loading = true
                state.error = null
@@ -40,8 +51,12 @@ const userSlice = createSlice({
           .addCase(handleGoogleCallback.rejected, (state, action) =>{
                state.loading = false,
                state.error = action.payload || 'Autentication failed'
-          }) 
+          })
+
+          
+
      },
 }) 
 
+export const { setUserData } = userSlice.actions
 export default userSlice.reducer;

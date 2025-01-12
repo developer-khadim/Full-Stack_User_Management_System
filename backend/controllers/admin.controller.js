@@ -4,6 +4,7 @@ const { generateToken } = require('../utils/generateToken')
 
 
 
+// Admin Login
 module.exports.adminLogin = async (req, res) => {
       
     const error  = validationResult(req)
@@ -27,6 +28,12 @@ module.exports.adminLogin = async (req, res) => {
              })
         }
     } catch(error){
-        res.status(500).json({ Error: error.message+"here" });
+        res.status(500).json({ Error: error.message });
     }
+}
+
+// getAdminProfile
+module.exports.getAdminProfile = async (req, res) => {
+
+     res.status(200).json(req.admin)
 }

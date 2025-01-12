@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const userController = require('../controllers/user.controller')
+const authMiddleware = require('../middlewares/authMiddleware')
 const { body } = require('express-validator')
 
 
@@ -57,5 +58,8 @@ router.post('/verify-otp',
          ],
          userController.otpVarification
 )
+
+// getProfile Route
+router.get('/profile', authMiddleware.userAuth, userController.getProfile)
 
 module.exports = router

@@ -23,7 +23,7 @@ module.exports.registerUser = async (req, res) => {
         let user = await userModel.findOne({ email })
 
         if(user){
-            res.status(404).json({ message: "Email already exists!"})
+            return res.status(404).json({ message: "Email already exists!"})
         } else {
 
         // Create the new user
@@ -104,7 +104,7 @@ module.exports.userLogin = async (req, res) => {
         )
         
         if(!existedUser || !(await existedUser.comparePassword(password))){
-           res.status(409).json({ Error: "User not found!" });
+          return res.status(409).json({ Error: "User not found!" });
 
         } else {
             // Generate Token
@@ -114,6 +114,7 @@ module.exports.userLogin = async (req, res) => {
             .json({message: "User logined Successfully", user: { ...existedUser.toObject(), password: undefined }, 
             token
              })
+             console.log(existedUser, token)
     }
     } catch(error) {
         res.status(500).json({ Error: error.message });
@@ -147,7 +148,7 @@ module.exports.sendOTP = async (req, res) => {
     )
     
     const mail = sendMail(email, username, otp)
-    res.status(200).json({ otp: newOTP, message: "Email sent successfully"})
+     res.status(200).json({ otp: newOTP, message: "Email sent successfully"})
 
     } catch(error) {
       res.status(500).json({ Error: error.message, message: "Email coundn't send Successfully, Try agian"})
@@ -164,7 +165,7 @@ module.exports.otpVarification = async (req, res) => {
         const isOTPMatch = await otpModel.findOne({ email } )
         // Match the OTP
         if(!isOTPMatch || !isOTPMatch.compareOTP(otp)){
-            res.status(404).json({ Error: "OTP doesn't Matched! Resend otp agian!!"})
+           return res.status(404).json({ Error: "OTP doesn't Matched! Resend otp agian!!"})
         } else {
 
             isOTPMatch.isVerified= true;
@@ -175,4 +176,10 @@ module.exports.otpVarification = async (req, res) => {
      } catch(error) {
         return res.status(500).json({ error: "An error occurred. Please try again!" });
      }
+}
+
+// Get User Profile
+module.exports.getProfile = async (req, res, next) => {
+
+      res.status(200).json({user: req.user})
 }

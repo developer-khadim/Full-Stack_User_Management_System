@@ -13,7 +13,6 @@ function TokenHandler() {
        const token =  searchParams.get('token') || ''
        const user = searchParams.get('user')  || ''
        if(token && user) {
-          localStorage.setItem('token', token)
           dispatch(handleGoogleCallback({user, token}))
           navigate('/User_dashboard')
        }  else {
